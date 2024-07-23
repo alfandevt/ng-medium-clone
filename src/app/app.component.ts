@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { TopBarComponent } from './shared/components/top-bar/top-bar.component';
+import { Store } from '@ngrx/store';
+import { authActions } from './auth/stores/actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet, TopBarComponent],
 })
-export class AppComponent {
-  title = 'ng-medium-clone';
+export class AppComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(authActions.getCurrentUser());
+  }
 }
